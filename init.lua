@@ -533,6 +533,18 @@ vim.defer_fn(function()
 end, 0)
 
 --- [[ Configure LSP ]]
+require('lspconfig').lua_ls.setup({
+  settings = {
+    Lua = {
+      diagnostics = { globals = { 'vim' } },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file('', true),
+        checkThirdParty = false,
+      },
+      telemetry = { enable = false },
+    },
+  },
+})
 ---  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
   --- NOTE: Remember that lua is a real programming language, and as such it is possible
@@ -636,22 +648,31 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 --- Ensure the servers above are installed
-local mason_lspconfig = require 'mason-lspconfig'
+local mason_lspconfig = require('mason-lspconfig')
 
 mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-    }
-  end,
-}
+local function setup_one(server)
+  require('lspconfig')[server].setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = servers[server],
+    filetypes = (servers[server] or {}).filetypes,
+  })
+end
+
+-- Prefer setup_handlers when available; otherwise fall back.
+if type(mason_lspconfig.setup_handlers) == 'function' then
+  mason_lspconfig.setup_handlers({
+    function(server) setup_one(server) end,
+  })
+else
+  for _, server in ipairs(mason_lspconfig.get_installed_servers()) do
+    setup_one(server)
+  end
+end
 
 --- [[ Configure nvim-cmp ]]
 --- See `:help cmp`
