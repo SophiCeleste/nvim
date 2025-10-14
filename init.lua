@@ -171,6 +171,49 @@ require('lazy').setup({
   },
 
   {
+    --- Monochrome Fantasy theme ---
+    'SophiCeleste/monochrome_fantasy.nvim',
+    priority = 1000,
+    lazy = false,
+    config = function()
+      require('monochrome_fantasy').setup {
+        ---- Main options ---
+        style = 'dark',               --- Default theme style. Choose between 'dark'
+        transparent = true,           --- Show/hide background
+        term_colors = false,          --- Change terminal color as per the selected theme style
+        ending_tildes = false,        --- Show the end-of-buffer tildes. By default they are hidden
+        cmp_itemkind_reverse = false, --- reverse item kind highlights in cmp menu
+
+        ---- Toggle theme style ---
+        toggle_style_key = nil,                  --- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+        toggle_style_list = { 'dark', 'light' }, --- List of styles to toggle between
+
+        ---- Change code style ---
+        ---- Options are italic, bold, underline, none
+        ---- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
+        code_style = {},
+
+        --- Lualine options ---
+        lualine = {
+          transparent = false, --- lualine center bar transparency
+        },
+
+        ---- Custom Highlights ---
+        colors = {},     --- Override default colors
+        highlights = {}, --- Override highlight groups
+
+        --- Plugins Config ---
+        diagnostics = {
+          darker = true,     --- darker colors for diagnostic
+          undercurl = true,  --- use undercurl instead of underline for diagnostics
+          background = true, --- use background color for virtual text
+        },
+      }
+      require('monochrome_fantasy').load()
+    end,
+  },
+  --[[
+  {
     --- Watermelon theme ---
     'SophiCeleste/watermelon.nvim',
     priority = 1000,
@@ -223,7 +266,7 @@ require('lazy').setup({
       require('watermelon').load()
     end,
   },
-
+]]
   {
     ---
     'kevinhwang91/nvim-ufo'
@@ -232,13 +275,54 @@ require('lazy').setup({
   {
     --- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     --- See `:help lualine.txt`
     opts = {
       options = {
-        icons_enabled = false,
+        icons_enabled = true,
         theme = 'auto',
         component_separators = '|',
         section_separators = '',
+        sections = {
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch', 'diff', 'diagnostics' },
+          lualine_c = {
+            {
+              'filename',
+              file_status = true,     -- Displays file status (readonly status, modified status)
+              newfile_status = false, -- Display new file status (new file means no write after created)
+              path = 4,               -- 0: Just the filename
+              -- 1: Relative path
+              -- 2: Absolute path
+              -- 3: Absolute path, with tilde as the home directory
+              -- 4: Filename and parent dir, with tilde as the home directory.
+
+              shroting_target = 40, -- Shortens path to leave 40 spaces in the window
+              -- for other components. (terrible name, any suggestions?)
+              symbols = {
+                modified = '[+]',      -- Text to show when the file is modified.
+                readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
+                unnamed = '[No Name]', -- Text to show for unnamed buffers.
+                newfile = '[Nex]',     -- Text to show for newly created file before first write.
+              }
+            }
+          },
+          lualine_x = { 'encoding', 'fileformat', 'filetype', 'lsp_status' },
+          lualine_y = { 'progress' },
+          lualine_z = { 'location', 'datetime' }
+        },
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = { 'filename' },
+          lualine_x = { 'location' },
+          lualine_y = {},
+          lualine_z = {}
+        },
+        tabline = {},
+        winbar = {},
+        inactive_winbar = {},
+        extensions = {}
       },
     },
   },
