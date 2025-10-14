@@ -171,12 +171,17 @@ require('lazy').setup({
   },
 
   {
+<<<<<<< Updated upstream
     --- Monochrome Fantasy theme ---
+=======
+    --- Monochrome Fantasy theme
+>>>>>>> Stashed changes
     'SophiCeleste/monochrome_fantasy.nvim',
     priority = 1000,
     lazy = false,
     config = function()
       require('monochrome_fantasy').setup {
+<<<<<<< Updated upstream
         ---- Main options ---
         style = 'dark',               --- Default theme style. Choose between 'dark'
         transparent = true,           --- Show/hide background
@@ -191,11 +196,30 @@ require('lazy').setup({
         ---- Change code style ---
         ---- Options are italic, bold, underline, none
         ---- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
+=======
+        --- Main options ---
+        style = 'dark',               --- Default theme style. Choose between 'dark, light'.
+        transparent = false,          --- Show/hide background.
+        ending_tildes = false,        --- Show the end-of-buffer tildes. By default they are hidden.
+        cmp_itemkind_reverse = false, --- Reverse item kind highlights in cmp menu.
+
+        --- Toggle theme style ---
+        toggle_style_key = nil,                  --- Keybind to toggle theme style. Leave it nil to disable it, or set it to a string, e.g., '<leader>ts'
+        toggle_style_list = { 'dark', 'light' }, --- List of styles to toggle between.
+
+        --- Change code style ---
+        --- Options are italic, bold, underline, none
+        --- You can configure multiple styles with comma separated, e.g., keywords = 'italic,bold'
+>>>>>>> Stashed changes
         code_style = {},
 
         --- Lualine options ---
         lualine = {
+<<<<<<< Updated upstream
           transparent = false, --- lualine center bar transparency
+=======
+          transparent = true, --- Lualine center bar transparency.
+>>>>>>> Stashed changes
         },
 
         ---- Custom Highlights ---
@@ -204,9 +228,15 @@ require('lazy').setup({
 
         --- Plugins Config ---
         diagnostics = {
+<<<<<<< Updated upstream
           darker = true,     --- darker colors for diagnostic
           undercurl = true,  --- use undercurl instead of underline for diagnostics
           background = true, --- use background color for virtual text
+=======
+          darker = true,     --- Darker colors for diagnostic
+          undercurl = true,  --- Use undercurl instead of underline for diagnostics
+          background = true, --- Use background color for virtual text
+>>>>>>> Stashed changes
         },
       }
       require('monochrome_fantasy').load()
@@ -233,7 +263,7 @@ require('lazy').setup({
 
         ---- Change code style ---
         ---- Options are italic, bold, underline, none
-        ---- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
+        ---- You can configure multiple styles with comma separated, e.g., keywords = 'italic,bold'
         code_style = {
           bool = 'bold',
           comments = 'italic',
@@ -676,22 +706,30 @@ local on_attach = function(_, bufnr)
 end
 
 --- document existing key chains
-require('which-key').register {
-  ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = 'Git [H]unk', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>t'] = { name = '[T]oggle', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+require('which-key').add {
+  { '<leader>c',  group = '[C]ode' },
+  { '<leader>c_', hidden = true },
+  { '<leader>d',  group = '[D]ocument' },
+  { '<leader>d_', hidden = true },
+  { '<leader>g',  group = '[G]it' },
+  { '<leader>g_', hidden = true },
+  { '<leader>h',  group = 'Git [H]unk' },
+  { '<leader>h_', hidden = true },
+  { '<leader>r',  group = '[R]ename' },
+  { '<leader>r_', hidden = true },
+  { '<leader>s',  group = '[S]earch' },
+  { '<leader>s_', hidden = true },
+  { '<leader>t',  group = '[T]oggle' },
+  { '<leader>t_', hidden = true },
+  { '<leader>w',  group = '[W]orkspace' },
+  { '<leader>w_', hidden = true },
 }
 --- register which-key VISUAL mode
 --- required for visual <leader>hs (hunk stage) to work
-require('which-key').register({
-  ['<leader>'] = { name = 'VISUAL <leader>' },
-  ['<leader>h'] = { 'Git [H]unk' },
-}, { mode = 'v' })
+require('which-key').add({
+  { '<leader>',  group = 'VISUAL <leader>', mode = 'v' },
+  { '<leader>h', desc = 'Git [H]unk',       mode = 'v' },
+})
 
 --- mason-lspconfig requires that these setup functions are called in this order
 --- before setting up the servers.
