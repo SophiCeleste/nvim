@@ -171,17 +171,12 @@ require('lazy').setup({
   },
 
   {
-<<<<<<< Updated upstream
-    --- Monochrome Fantasy theme ---
-=======
     --- Monochrome Fantasy theme
->>>>>>> Stashed changes
     'SophiCeleste/monochrome_fantasy.nvim',
     priority = 1000,
     lazy = false,
     config = function()
       require('monochrome_fantasy').setup {
-<<<<<<< Updated upstream
         ---- Main options ---
         style = 'dark',               --- Default theme style. Choose between 'dark'
         transparent = true,           --- Show/hide background
@@ -196,30 +191,11 @@ require('lazy').setup({
         ---- Change code style ---
         ---- Options are italic, bold, underline, none
         ---- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
-=======
-        --- Main options ---
-        style = 'dark',               --- Default theme style. Choose between 'dark, light'.
-        transparent = false,          --- Show/hide background.
-        ending_tildes = false,        --- Show the end-of-buffer tildes. By default they are hidden.
-        cmp_itemkind_reverse = false, --- Reverse item kind highlights in cmp menu.
-
-        --- Toggle theme style ---
-        toggle_style_key = nil,                  --- Keybind to toggle theme style. Leave it nil to disable it, or set it to a string, e.g., '<leader>ts'
-        toggle_style_list = { 'dark', 'light' }, --- List of styles to toggle between.
-
-        --- Change code style ---
-        --- Options are italic, bold, underline, none
-        --- You can configure multiple styles with comma separated, e.g., keywords = 'italic,bold'
->>>>>>> Stashed changes
         code_style = {},
 
         --- Lualine options ---
         lualine = {
-<<<<<<< Updated upstream
-          transparent = false, --- lualine center bar transparency
-=======
           transparent = true, --- Lualine center bar transparency.
->>>>>>> Stashed changes
         },
 
         ---- Custom Highlights ---
@@ -228,15 +204,9 @@ require('lazy').setup({
 
         --- Plugins Config ---
         diagnostics = {
-<<<<<<< Updated upstream
-          darker = true,     --- darker colors for diagnostic
-          undercurl = true,  --- use undercurl instead of underline for diagnostics
-          background = true, --- use background color for virtual text
-=======
           darker = true,     --- Darker colors for diagnostic
           undercurl = true,  --- Use undercurl instead of underline for diagnostics
           background = true, --- Use background color for virtual text
->>>>>>> Stashed changes
         },
       }
       require('monochrome_fantasy').load()
