@@ -3,6 +3,7 @@
 ---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.opt.runtimepath:append(vim.fn.stdpath('data') .. '/site')
 
 --- [[ Install `lazy.nvim` plugin manager ]]
 ---    https://github.com/folke/lazy.nvim
@@ -616,19 +617,6 @@ vim.defer_fn(function()
   }
 end, 0)
 
---- [[ Configure LSP ]]
-require('lspconfig').lua_ls.setup({
-  settings = {
-    Lua = {
-      diagnostics = { globals = { 'vim' } },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file('', true),
-        checkThirdParty = false,
-      },
-      telemetry = { enable = false },
-    },
-  },
-})
 ---  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
   --- NOTE: Remember that lua is a real programming language, and as such it is possible
